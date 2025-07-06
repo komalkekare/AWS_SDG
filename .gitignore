@@ -24,3 +24,16 @@ package-lock.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+.env
+*.pem
+*.key
+*.crt
+*.p12
+secrets.json
+credentials.txt
+
+# API config
+config/aws.js
+src/Components/Store/Thunk/Btaas/testData.js
+src/Components/Btaas/github/GitHub.js

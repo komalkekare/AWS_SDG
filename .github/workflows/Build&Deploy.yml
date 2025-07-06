@@ -1,0 +1,41 @@
+name: Deploy to Virtual Machine
+
+on:
+  push:
+    branches:
+      - Test-Build&DeployBtaas
+  pull_request:
+    branches:
+      - Test-Build&DeployBtaas
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16.8.0' 
+
+    - name: Install dependencies
+      run: npm install --force
+
+    - name: Build
+      run: npm run build
+      env:
+        CI: false
+
+    - name: Set up Google Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        project_id: gai-ctooffice
+        export_default_credentials: true
+
+    - name: Copy files to GCP VM
+      run: | 
+        sudo cp -r ./build/* /var/www/html/
+        sudo systemctl restart nginx

@@ -1,0 +1,84 @@
+Sure! Here are some examples of test cases you can write in JUnit:
+
+1. Testing a simple method that adds two numbers:
+
+```java
+@Test
+public void testAddNumbers() {
+  // Arrange
+  int a = 5;
+  int b = 10;
+  int expected = 15;
+
+  // Act
+  int result = MyClass.addNumbers(a, b);
+
+  // Assert
+  assertEquals(expected, result);
+}
+```
+
+2. Testing a method that checks if a string is empty:
+
+```java
+@Test
+public void testIsEmpty() {
+  // Arrange
+  String emptyString = "";
+  String nonEmptyString = "Hello";
+
+  // Act & Assert
+  assertTrue(MyClass.isEmpty(emptyString));
+  assertFalse(MyClass.isEmpty(nonEmptyString));
+}
+```
+
+3. Testing a method that sorts an array in ascending order:
+
+```java
+@Test
+public void testSortArray() {
+  // Arrange
+  int[] unsortedArray = {5, 2, 9, 1, 7};
+  int[] expected = {1, 2, 5, 7, 9};
+
+  // Act
+  int[] result = MyClass.sortArray(unsortedArray);
+
+  // Assert
+  assertArrayEquals(expected, result);
+}
+```
+
+4. Testing a method that throws an exception:
+
+```java
+@Test(expected = IllegalArgumentException.class)
+public void testDivideByZero() {
+  // Arrange
+  int a = 10;
+  int b = 0;
+
+  // Act
+  MyClass.divide(a, b);
+}
+```
+
+5. Testing a method that interacts with a database:
+
+```java
+@Test
+public void testGetUserById() {
+  // Arrange
+  int userId = 1;
+  User expectedUser = new User(userId, "John Doe");
+
+  // Act
+  User resultUser = MyClass.getUserById(userId);
+
+  // Assert
+  assertEquals(expectedUser, resultUser);
+}
+```
+
+These are just a few examples of test cases you can write in JUnit. The key is to cover different scenarios and ensure that your code behaves as expected in each case.

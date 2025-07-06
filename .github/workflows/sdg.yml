@@ -1,0 +1,106 @@
+name: react-deploy-gcp
+
+on:
+  push:
+    branches:
+      - Synthetic-Data-Generatioin-v2
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  PROJECT_ID: brlcto-btaasgcp
+  GOOGLE_REGION: us-central1
+  BUCKET_NAME: sdgdeploy
+  TERRAFORM_FOLDER: terraform
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build React app
+        env:
+          CI: false
+        run: npm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: react-build
+          path: build
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: react-build
+          path: build
+
+      - id: 'auth'
+        name: 'Authenticate to GCP using Workload Identity Federation'
+        uses: 'google-github-actions/auth@v0.3.1'
+        with:
+          workload_identity_provider: 'projects/739349493595/locations/global/workloadIdentityPools/brillio-githubintegration/providers/github-pipeline'
+          service_account: '739349493595-compute@developer.gserviceaccount.com'
+          create_credentials_file: 'true'
+
+      - name: Set GOOGLE_APPLICATION_CREDENTIALS
+        run: |
+          export GOOGLE_APPLICATION_CREDENTIALS="${{ steps.auth.outputs.credentials_file_path }}"
+          echo "Credentials file path set as: $GOOGLE_APPLICATION_CREDENTIALS"
+
+      - name: Verify gcloud authentication
+        run: |
+          echo "Verifying gcloud authentication..."
+          gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
+          gcloud auth list
+          echo "Current active account in gcloud: $(gcloud config get-value account)"
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+
+      - name: Configure gcloud
+        run: |
+          gcloud config set project ${{ env.PROJECT_ID }}
+
+      - name: Deploy to Google Cloud Storage
+        run: gsutil -m rsync -r build gs://${{ env.BUCKET_NAME }}
+
+      - name: Invalidate Cloud CDN cache
+        run: gcloud compute url-maps invalidate-cdn-cache my-url-map --path "/*"
+
+      - name: Setup Terraform
+        run: |
+          curl -fsSL https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+          sudo apt-get update && sudo apt-get install terraform
+
+      - name: Terraform Init
+        run: |
+          cd ${{ github.workspace }}/${{ env.TERRAFORM_FOLDER }}
+          terraform init
+
+      - name: Terraform Apply
+        run: |
+          cd ${{ github.workspace }}/${{ env.TERRAFORM_FOLDER }}
+          terraform apply -auto-approve
