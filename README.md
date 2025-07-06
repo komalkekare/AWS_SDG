@@ -42,41 +42,6 @@ iv. Build the app for production
 
     npm run build
 
-# Deploying React Application on GCP App Engine:-
-
-  Once the build file is ready, follow below steps to deploy the application to app engine:
-
-  1. Create an **app.yaml** file in the editor of Google Cloud Activation Shell
-     
-      
-          runtime: nodejs18
-          service: syntheticdatageneration
-          handlers:
-         # Serve all static files with url ending with a file extension
-         - url: /(.*\..+)$
-         static_files: build/\1
-         upload: build/(.*\..+)$
-         # Catch all handler to index.html
-         - url: /.*
-           static_files: build/index.html
-           upload: build/index.html
-     
- 3. Authenticate with Google Cloud (if not done earlier):
-
-        gcloud auth login
-    
- 4. Select your project: Run the following command to ensure you are working with the correct project:
-    
-        gcloud config set project YOUR_PROJECT_ID
-
- 5.  Deploy your application: Run the following command to deploy your React app to Google App Engine:
-
-         gcloud app deploy
-     
-# Google App Engine Documentation Reference:
-
-*  [Deploy to App Engine] (https://cloud.google.com/build/docs/deploying-builds/deploy-appengine)
-
 # React References:-
 * [Quick Start with React] (https://react.dev/learn)
 
