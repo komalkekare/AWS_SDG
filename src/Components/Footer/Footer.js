@@ -15,7 +15,6 @@ export default function Footer() {
           component="p"
           marginTop="-10px"
         >
-           © 2024 Brillio. All rights reserved
         </Typography>
 
       </Box>

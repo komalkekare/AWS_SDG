@@ -1,7 +1,6 @@
 import React from "react";
 import { AppBar, Toolbar, Box, IconButton, Button } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import BrillioLogo from "../../assests/BrillioLogo.png";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
@@ -32,7 +31,6 @@ export default function Navbar() {
                 sx={{ mr: 2 }}
               ></IconButton>
 
-              <img src={BrillioLogo} alt="Logo" style={{ height: "35px" }} />
             </Link>
             
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} />
