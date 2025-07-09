@@ -24,7 +24,7 @@ import Step from '@mui/material/Step';
 import { Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
 // Importing step components for each phase of the process
-import GetTables from './steps/GetTables';
+// import GetTables from './steps/GetTables';
 import GenerateData from '../stepTestData/steps/GenerateData';
 import Save from './steps/Save';
 import ConfigurationDetails from './steps/ConfigurationDetails'; 
@@ -33,7 +33,7 @@ import Validation from './steps/Validation';
 import { useDispatch, useSelector } from 'react-redux';
 import StepLabel from "@mui/material/StepLabel";
 import { clearTableList, setGenericDbCred } from '../../Store/Action/Btaas/testDataSlice';
-import { getTables } from '../../Store/Thunk/Btaas/testData';
+// import { getTables } from '../../Store/Thunk/Btaas/testData';
 
 export default function TestDataStepper() {
   const dispatch = useDispatch();
@@ -76,7 +76,7 @@ export default function TestDataStepper() {
     };
     dispatch(setGenericDbCred(genericDbCred));
     dispatch(clearTableList());
-    dispatch(getTables(genericDbCred));
+    // dispatch(getTables(genericDbCred));
   };
    // Handles navigation to the previous step
   const handleBack = () => {
@@ -98,8 +98,8 @@ export default function TestDataStepper() {
     switch (step) {
       case 0:
         return <ConfigurationDetails />; 
-      case 1:
-        return < GetTables/>;
+      // case 1:
+      //   return < GetTables/>;
       case 2:
         return <GenerateData />;
       case 3:

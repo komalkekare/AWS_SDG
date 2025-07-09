@@ -76,11 +76,11 @@ import {
   TablePagination,
 } from "@mui/material";
 import { Add, Remove } from "@mui/icons-material";
-import {
-  backToDb,
-  pushInGithub,
-  getBranches,
-} from "../../../Store/Thunk/Btaas/testData";
+// import {
+//   backToDb,
+//   pushInGithub,
+//   getBranches,
+// } from "../../../Store/Thunk/Btaas/testData";
 // import Snackbar from "@mui/material/Snackbar";
 import Loader from "../../../Utils/loader";
 import {
@@ -562,7 +562,7 @@ export default function Save() {
         gitpat: gitSetupCred.pat,
         repoOwner: gitSetupCred.repoOwner,
       };
-      dispatch(pushInGithub(params));
+      // dispatch(pushInGithub(params));
     } else if (dbType === "Back To DB") {
       const params =
         dbType === "CloudSql"
@@ -581,7 +581,7 @@ export default function Save() {
             selectedTable,
             parsedData: JSON.stringify(syntheticData),
           };
-      dispatch(backToDb(params));
+      // dispatch(backToDb(params));
     } else if (dbType === "Firestore") {
       await pushDataToFirestore();
     } else if (dbType === "BigQuery") {

@@ -44,7 +44,7 @@ import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "@mui/material";
-import { getTables } from "../../../Store/Thunk/Btaas/testData";
+// import { getTables } from "../../../Store/Thunk/Btaas/testData";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Card, CardContent, CircularProgress } from "@mui/material";
 import { Typography } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -121,7 +121,7 @@ export default function GetTables() {
     };
     dispatch(setGenericDbCred(genericDbCred));
     dispatch(clearTableList());
-    dispatch(getTables(genericDbCred));
+    // dispatch(getTables(genericDbCred));
   };
 
   const handleDataStoreDbCred = async (event) => {
@@ -136,7 +136,7 @@ export default function GetTables() {
     // };
     // dispatch(setDataStoreCred(dataStoreCred));
     // dispatch(clearTableList());
-    dispatch(getTables(dataStoreCred));
+    // dispatch(getTables(dataStoreCred));
   };
   // JSON/CSV function for file uploading by API call to extract schema and sensitive fields
   const handleFileUpload = async (event) => {
@@ -303,7 +303,7 @@ export default function GetTables() {
           const tablesJson = await functionResponse.json();
           console.log('Tables response:', tablesJson);
           setTables(tablesJson.tables);
-          dispatch(getTables(tablesJson));
+          // dispatch(getTables(tablesJson));
         } else {
           // console.error('No datasets found for the project.');
         }

@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { gitSetup } from "../../Thunk/Btaas/setup";
-import {
-  getTableSchema,
-  getTables,
-  generateData,
-  getBranches,
-  backToDb,
-  pushInGithub,
-} from "../../Thunk/Btaas/testData";
+// import {
+//   getTableSchema,
+//   getTables,
+//   generateData,
+//   getBranches,
+//   backToDb,
+//   pushInGithub,
+// } from "../../Thunk/Btaas/testData";
 
 const initialState = {
   gitSetupCred: null,
@@ -69,9 +69,9 @@ const testDataSlice = createSlice({
     setFileName(state, action) {
       state.fileName = action.payload;
     },
-    clearBackToDbResp(state) {
-      state.backToDbResp = null;
-    },
+    // clearBackToDbResp(state) {
+    //   state.backToDbResp = null;
+    // },
     clearPushInGithub(state) {
       state.pushInGithubResp = null;
     },
@@ -93,44 +93,44 @@ const testDataSlice = createSlice({
     builder.addCase(gitSetup.pending, (state) => {
       state.isRepoListLoading = true;
     });
-    builder.addCase(getTables.fulfilled, (state, action) => {
-      state.tableList = action.payload;
-      state.isTableListLoading = false;
-    });
-    builder.addCase(getTables.pending, (state) => {
-      state.isTableListLoading = true;
-    });
-    builder.addCase(getTableSchema.fulfilled, (state, action) => {
-      state.tableSchema = action.payload;
-      state.isTableSchemaLoading = false;
-    });
-    builder.addCase(getTableSchema.pending, (state) => {
-      state.isTableSchemaLoading = true;
-    });
-    builder.addCase(generateData.fulfilled, (state, action) => {
-      state.syntheticData = action.payload;
-      state.isSyntheticDataLoading = false;
-    });
-    builder.addCase(generateData.pending, (state) => {
-      state.isSyntheticDataLoading = true;
-    });
-    builder.addCase(getBranches.fulfilled, (state, action) => {
-      state.branchList = action.payload;
-    });
-    builder.addCase(backToDb.fulfilled, (state, action) => {
-      state.backToDbResp = action.payload;
-      state.isBacktoDbLoading = false;
-    });
-    builder.addCase(pushInGithub.fulfilled, (state, action) => {
-      state.pushInGithubResp = action.payload;
-      state.isPushInGithubLoading = false;
-    });
-    builder.addCase(backToDb.pending, (state) => {
-      state.isBacktoDbLoading = true;
-    });
-    builder.addCase(pushInGithub.pending, (state) => {
-      state.isPushInGithubLoading = true;
-    });
+    // builder.addCase(getTables.fulfilled, (state, action) => {
+    //   state.tableList = action.payload;
+    //   state.isTableListLoading = false;
+    // });
+    // builder.addCase(getTables.pending, (state) => {
+    //   state.isTableListLoading = true;
+    // });
+    // builder.addCase(getTableSchema.fulfilled, (state, action) => {
+    //   state.tableSchema = action.payload;
+    //   state.isTableSchemaLoading = false;
+    // });
+    // builder.addCase(getTableSchema.pending, (state) => {
+    //   state.isTableSchemaLoading = true;
+    // });
+    // builder.addCase(generateData.fulfilled, (state, action) => {
+    //   state.syntheticData = action.payload;
+    //   state.isSyntheticDataLoading = false;
+    // });
+    // builder.addCase(generateData.pending, (state) => {
+    //   state.isSyntheticDataLoading = true;
+    // });
+    // builder.addCase(getBranches.fulfilled, (state, action) => {
+    //   state.branchList = action.payload;
+    // });
+    // builder.addCase(.fulfilled, (state, action) => {
+    //   state.backToDbResp = action.payload;
+    //   state.isBacktoDbLoading = false;
+    // });
+    // builder.addCase(pushInGithub.fulfilled, (state, action) => {
+    //   state.pushInGithubResp = action.payload;
+    //   state.isPushInGithubLoading = false;
+    // });
+    // builder.addCase(backToDb.pending, (state) => {
+    //   state.isBacktoDbLoading = true;
+    // });
+    // builder.addCase(pushInGithub.pending, (state) => {
+    //   state.isPushInGithubLoading = true;
+    // });
   },
 });
 
